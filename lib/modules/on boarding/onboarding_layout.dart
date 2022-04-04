@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/network/local/cachHelper.dart';
-import 'package:shop_app/modules/shop_login_screen.dart';
+import 'package:shop_app/modules/login/shop_login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class BoardingModel
 {
@@ -22,10 +22,18 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding=[
-    BoardingModel(image: 'assets/images/photo.png', title: 'on board 1 title', body: 'on board 1 body'),
-    BoardingModel(image: 'assets/images/photo.png', title: 'on board 2 title', body: 'on board 2 body'),
-    BoardingModel(image: 'assets/images/photo.png', title: 'on board 3 title', body: 'on board 3 body'),
-
+    BoardingModel(
+        image: 'assets/images/OnlineShop.png',
+        body: 'Choose Whatever the Product you wish for with the easiest way possible using ShopMart',
+        title: 'Explore'),
+    BoardingModel(
+        image: 'assets/images/Delivery.png',
+        body: 'Yor Order will be shipped to you as fast as possible by our carrier',
+        title: 'Shipping'),
+    BoardingModel(
+        image: 'assets/images/Payment.png',
+        body: 'Pay with the safest way possible either by cash or credit cards',
+        title: 'Make the Payment'),
 
   ];
 
@@ -36,7 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white.withOpacity(0.4),
         elevation: 0.0,
         actions: [
           TextButton(onPressed: (){
@@ -46,7 +54,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
               }
             });
-          }, child: Text('SKIP'))
+          }, child: Text('SKIP',style: TextStyle(
+            color: Colors.blueGrey
+          ),))
         ],
       ),
       body: Padding(
@@ -85,7 +95,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     count: boarding.length,
                   effect: ExpandingDotsEffect(
                     dotColor: Colors.grey,
-                     activeDotColor: Colors.blue,
+                     activeDotColor: Colors.blueGrey,
                      dotHeight: 10,
                     expansionFactor: 4,
                     dotWidth: 10,
@@ -112,7 +122,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     }
 
                 },
-                  child: Icon(Icons.arrow_forward_ios_sharp),backgroundColor: Colors.blue,)
+                  child: Icon(Icons.arrow_forward_ios_sharp,color: Colors.white,),backgroundColor: Colors.blueGrey,)
 
               ],
             ),

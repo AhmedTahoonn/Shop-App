@@ -10,6 +10,9 @@ import 'package:shop_app/cuibt/shaared%20sshop/states.dart';
 import 'package:shop_app/models/home_model.dart';
 import 'package:shop_app/styles/icon_broken.dart';
 
+import '../cateogries/categoryProductsScreen.dart';
+import 'productScreen.dart';
+
 class products_Screen extends StatelessWidget {
 
   @override
@@ -17,7 +20,7 @@ class products_Screen extends StatelessWidget {
     Future refresh()async{
 
       Shopcubit.get(context).getHomeData();
-      Shopcubit.get(context).getGategories();
+      Shopcubit.get(context).getCategories();
       Shopcubit.get(context).getUserData();
       await Future.delayed(Duration(seconds:5,),);
 
@@ -68,19 +71,20 @@ class products_Screen extends StatelessWidget {
         ),
         CarouselSlider(items:model.data!.banners.map((e) => Image(image: NetworkImage('${e.image}'),width: double.infinity,fit: BoxFit.cover,)
         ).toList(), options:  CarouselOptions(
-           height: 250,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
           autoPlay: true,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          height: 200,
+          initialPage: 0,
+          reverse: false,
+          scrollDirection: Axis.horizontal,
+          viewportFraction: 1,
           autoPlayInterval: Duration(
-            seconds: 3,
+            seconds: 5,
           ),
           autoPlayAnimationDuration:  Duration(
-            seconds: 3,
+            seconds: 5,
           ),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          scrollDirection: Axis.horizontal,
         )),
         SizedBox(
           height: 10,
@@ -97,10 +101,13 @@ class products_Screen extends StatelessWidget {
                  fontWeight: FontWeight.w800,
                ),
              ),
+             SizedBox(
+               height: 10,
+             ),
 
              Container(
                height: 100,
-               child: ListView.separated(itemBuilder:(context, index) => buildCategoriesItems(categoriesModel.data!.data[index]) , separatorBuilder: (context, index) => SizedBox(
+               child: ListView.separated(itemBuilder:(context, index) => categoriesAvatar(categoriesModel.data!.data[index],context) , separatorBuilder: (context, index) => SizedBox(
                  width: 10.0,
                ), itemCount: categoriesModel.data!.data.length,
                scrollDirection: Axis.horizontal,
@@ -133,7 +140,7 @@ class products_Screen extends StatelessWidget {
              mainAxisSpacing: 1,
              crossAxisSpacing: 1,
              childAspectRatio: 1/1.7,
-             children:List.generate(model.data!.products.length, (index) => buildGridProduct(model.data!.products[index],context),
+             children:List.generate(model.data!.products.length, (index) => productItemBuilder(model.data!.products[index],context),
              ),
 
           ),
@@ -144,6 +151,7 @@ class products_Screen extends StatelessWidget {
   );
 
   Widget buildGridProduct(ProductModel model,context)=>Container(
+    
     color: Colors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +163,7 @@ class products_Screen extends StatelessWidget {
             Image(
             image: NetworkImage(model.image!),
               width: double.infinity,
-              height: 200,
+              height: 180,
             ),
             if(model.discount!=0)
             Container(
@@ -175,82 +183,178 @@ class products_Screen extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: [
-              Text(
-                model.name!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  height: 1.3,
-                ),
-              ),
-              Row(
-                children:
-                [
-                  Text(
-                    '${model.price.round()}',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.blue,
-                    ),
+              children: [
+                Text(
+                  model.name!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    height: 1.3,
                   ),
-                  SizedBox(width: 5,),
-                  if(model.discount!=0)
+                ),
+                Row(
+                  children:
+                  [
+                    Text('EGP',style: TextStyle(color: Colors.grey[800],fontSize: 12,),),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(
+                      '${model.price.round()}',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    SizedBox(width: 5,),
+                    Spacer(),
+                    IconButton(onPressed: (){
+                      Shopcubit.get(context).changeFavourites(model.id!);
+
+                      print(model.id);
+                      }, icon: CircleAvatar(
+                        radius: 13,
+                        backgroundColor: Shopcubit.get(context).favourites[model.id!]!?Colors.blue:Colors.grey,
+                        child: Icon(IconBroken.Heart,color: Colors.white,size: 13,),),iconSize: 12,),
+
+                  ],
+                ),
+                if(model.discount!=0)
+                  Text(
                     '${model.oldPrice.round()}',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 10.0,
-                      color: Colors.grey,
-                      decoration: TextDecoration.lineThrough
+                        fontSize: 10.0,
+                        color: Colors.grey,
+                        decoration: TextDecoration.lineThrough
                     ),
                   ),
-                  Spacer(),
-                  IconButton(onPressed: (){
-                    Shopcubit.get(context).changeFavourites(model.id!);
-
-                    print(model.id);
-                    }, icon: CircleAvatar(
-                      radius: 13,
-                      backgroundColor: Shopcubit.get(context).favourites[model.id!]!?Colors.blue:Colors.grey,
-                      child: Icon(IconBroken.Heart,color: Colors.white,size: 13,),),iconSize: 12,),
-
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
       ],
     ),
   );
-  Widget buildCategoriesItems(DataModel model)=>  Stack(
-    alignment: AlignmentDirectional.bottomCenter,
-    children:
-    [
-      Image(image: NetworkImage(model.image!),
-        width: 100,
-        height: 100,
-        fit: BoxFit.cover,
-      ),
-      Container(
-        width: 100,
-        color: Colors.black.withOpacity(0.8),
-        child: Text(
-          model.name!,
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Colors.white
-          ),
+  Widget productItemBuilder (ProductModel model,context) {
+    return InkWell(
+      onTap: (){
+        Shopcubit.get(context).getProductDataDetails(model.id);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductScreen(),));
+      },
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsetsDirectional.only(start: 8,bottom: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:
+          [
+            Stack(
+                alignment:AlignmentDirectional.bottomStart,
+                children:[
+                  Image(image: NetworkImage('${model.image}'),height: 180,),
+                  if(model.discount != 0 )
+                    Container(
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text('Discount',style: TextStyle(fontSize: 14,color: Colors.white),),
+                        )
+                    )
+                ]),
+            Text('${model.name}',maxLines: 3, overflow: TextOverflow.ellipsis,),
+            Spacer(),
+            Row(
+              children: [
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:
+                    [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('EGP',style: TextStyle(color: Colors.black,fontSize: 12,),),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text('${model.price}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),),
+                        ],
+                      ),
+                      if(model.discount != 0 )
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text('EGP',style: TextStyle(color: Colors.grey,fontSize: 10,decoration: TextDecoration.lineThrough,),),
+                            Text('${model.oldPrice}',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Colors.grey),
+                            ),
+                            SizedBox(width: 5,),
+                            Text('${model.discount}'+'% OFF',style: TextStyle(color: Colors.red,fontSize: 11),)
+                          ],
+                        ),
+                    ]
+                ),
+                Spacer(),
+                IconButton(onPressed: (){
+                  Shopcubit.get(context).changeFavourites(model.id!);
+
+                  print(model.id);
+                }, icon: CircleAvatar(
+                  radius: 13,
+                  backgroundColor: Shopcubit.get(context).favourites[model.id!]!?Colors.blue:Colors.grey,
+                  child: Icon(IconBroken.Heart,color: Colors.white,size: 13,),),iconSize: 12,),
+              ],
+            )
+          ],
         ),
       ),
-    ],
-  );
+    );
+  }
+
+  Widget categoriesAvatar(DataModel model,context) {
+    return InkWell(
+      onTap: (){
+        Shopcubit.get(context).getCategoriesDetailData(model.id);
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  CategoryProductsScreen(model.name),));
+      },
+      child: Column(
+        children:
+        [
+          Stack(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.red,
+                radius:36 ,
+              ),
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 35,
+                child: Image(
+                  image: NetworkImage('${model.image}'),
+                  width: 50,
+                  height: 50,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10,),
+          Text('${model.name}'),
+        ],
+      ),
+    );
+  }
 }

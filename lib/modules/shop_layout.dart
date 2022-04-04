@@ -29,8 +29,9 @@ class shop_layout extends StatelessWidget {
             [
               BottomNavigationBarItem(icon: Icon(IconBroken.Home),label: 'Home'),
               BottomNavigationBarItem(icon: Icon(IconBroken.Category),label: 'Categories'),
-              BottomNavigationBarItem(icon: Icon(IconBroken.Heart),label: 'Favorites'),
-              BottomNavigationBarItem(icon: Icon(IconBroken.Setting),label: 'settings'),
+              BottomNavigationBarItem(icon: Icon(IconBroken.Profile),label: 'MY Account'),
+              BottomNavigationBarItem(icon: Icon(Icons.card_travel),label: 'Cart'),
+
 
 
             ],

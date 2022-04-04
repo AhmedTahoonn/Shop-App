@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/cuibt/search%20shared/search%20cuibt.dart';
-import 'package:shop_app/cuibt/search%20shared/searchstates.dart';
+
 import 'package:shop_app/models/search%20model.dart';
 import 'package:shop_app/styles/icon_broken.dart';
-
+import '../../cuibt/search cubit/search cuibt.dart';
+import '../../cuibt/search cubit/searchstates.dart';
 import '../../cuibt/shaared sshop/cubit.dart';
 
 class search_Screen extends StatelessWidget {
@@ -22,6 +21,10 @@ var sreachController=TextEditingController();
         builder: (context,state){
             return Scaffold(
               appBar: AppBar(
+                leading: IconButton(onPressed: (){
+                  Navigator.pop(context);
+                },icon: Icon(IconBroken.Arrow___Left_2,color: Colors.black,)),
+
                 backgroundColor: Colors.white.withOpacity(0.4),
                 elevation: 0.0,
                 automaticallyImplyLeading: false,
@@ -29,6 +32,7 @@ var sreachController=TextEditingController();
                   'Search',style: TextStyle(
                   color: Colors.black,
                       fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic
                 ),
                 ),
               ),
@@ -42,6 +46,9 @@ var sreachController=TextEditingController();
                       TextFormField(
                         onFieldSubmitted: (text){
                           SearchCubit.get(context).search(text);
+                        },
+                        onChanged: (value){
+                          SearchCubit.get(context).search(value);
                         },
                         validator: (value)
                         {
@@ -65,10 +72,10 @@ var sreachController=TextEditingController();
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       if(state is SearchLoadingState)
-                      LinearProgressIndicator(),
+                      Center(child: CircularProgressIndicator()),
                       SizedBox(
                         height: 10,
                       ),

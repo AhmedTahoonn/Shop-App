@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/network/endpoint.dart';
 import 'package:shop_app/network/local/cachHelper.dart';
-import 'package:shop_app/modules/regiester%20screen.dart';
+import 'package:shop_app/modules/register/regiester%20screen.dart';
 import 'package:shop_app/modules/shop_layout.dart';
 import 'package:shop_app/styles/icon_broken.dart';
 
-import '../cuibt/shared Login/cubit.dart';
-import '../cuibt/shared Login/states.dart';
+import '../../cuibt/shared Login/cubit.dart';
+import '../../cuibt/shared Login/states.dart';
 
 
 class LogIn extends StatelessWidget {

@@ -26,6 +26,16 @@ class favourite_Screen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            title: Text('Favourites',style: TextStyle(
+              color: Colors.black
+            ),),
+            leading: IconButton(onPressed: (){
+              Navigator.pop(context);
+            },icon: Icon(IconBroken.Arrow___Left_2)),
+          ),
           body:RefreshIndicator(
             onRefresh: refresh,
             child: ConditionalBuilderRec(

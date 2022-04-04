@@ -36,7 +36,6 @@ class Logincubit extends Cubit<LoginStates>
     ).then((value) {
       print(value.data);
       model=LoginModel.fromJ4son(value.data);
-
       emit(Shoploginscuess(model!));
     }).catchError((error){
       print(error.toString());

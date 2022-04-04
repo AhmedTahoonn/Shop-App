@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/modules/shop_layout.dart';
-import 'package:shop_app/modules/shop_login_screen.dart';
+import 'package:shop_app/modules/login/shop_login_screen.dart';
 import 'cuibt/bloc_observe.dart';
 import 'cuibt/shaared sshop/cubit.dart';
 import 'cuibt/shared Login/cubit.dart';
@@ -10,7 +10,7 @@ import 'cuibt/shared register/cubit-register.dart';
 import 'network/local/cachHelper.dart';
 import 'network/remote/dio.dart';
 import 'network/endpoint.dart';
-import 'modules/onboarding_layout.dart';
+import 'modules/on boarding/onboarding_layout.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +48,7 @@ MyApp(this.startWidget);
       providers: [
       BlocProvider( create: (context) => Logincubit(),
     ),
-        BlocProvider( create: (context) => Shopcubit()..getHomeData()..getGategories()..getFavorites()..getUserData(),
+        BlocProvider( create: (context) => Shopcubit()..getHomeData()..getCategories()..getFavorites()..getUserData()..getAddresses()..getCartData(),
         ),
         BlocProvider( create: (context) => Registerncubit(),
         ),
@@ -72,7 +72,7 @@ MyApp(this.startWidget);
               // or simply save your changes to "hot reload" in a Flutter IDE).
               // Notice that the counter didn't reset back to zero; the application
               // is not restarted.
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.grey,
             ),
             home:startWidget                                                                   //onBoarding?LogIn(): OnBoardingScreen(),
           );

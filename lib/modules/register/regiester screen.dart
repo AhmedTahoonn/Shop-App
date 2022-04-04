@@ -3,11 +3,11 @@ import 'package:conditional_builder_rec/conditional_builder_rec.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app/modules/shop_login_screen.dart';
+import 'package:shop_app/modules/login/shop_login_screen.dart';
 import 'package:shop_app/styles/icon_broken.dart';
 
-import '../cuibt/shared register/cubit-register.dart';
-import '../cuibt/shared register/states_register.dart';
+import '../../cuibt/shared register/cubit-register.dart';
+import '../../cuibt/shared register/states_register.dart';
 
 class Register extends StatelessWidget {
   var emailcontroller = TextEditingController();
